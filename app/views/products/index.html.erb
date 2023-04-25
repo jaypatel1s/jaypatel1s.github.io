@@ -1,0 +1,10 @@
+<% @products.each do |product| %>
+  <div class="product">
+  <%= form_with(url: add_item_path(product_id: product.id), method: :post) do |f| %>
+
+
+    <h3><%= product.name %></h3>
+    <p><%= number_to_currency(product.selling_price) %>
+ <%= f.submit 'Add to cart' %>
+<% end %>  </div>
+<% end %>

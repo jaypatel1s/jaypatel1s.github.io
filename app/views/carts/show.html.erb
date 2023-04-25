@@ -1,0 +1,30 @@
+<h1>Cart</h1>
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Actions</th>
+  </tr>
+  <% @cart.each do |product_id, quantity| %>
+    <tr>
+      <td><%= get_product_details(product_id)[:name] %></td>
+      <td><%= quantity %></td>
+      <td><%= number_to_currency(get_product_details(product_id)[:price] * quantity) %></td>
+      <td>
+        <%= link_to 'Remove', remove_item_path(product_id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= form_tag update_quantity_path, method: :patch do %>
+          <%= hidden_field_tag 'product_id', product_id %>
+          <%= number_field_tag 'quantity', quantity, in: 1..10 %>
+          <%= submit_tag 'Update' %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td>Total:</td>
+    <td><%= number_to_currency(total_price) %></td>
+    <td></td>
+  </tr>
+</table>
